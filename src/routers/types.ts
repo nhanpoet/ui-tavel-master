@@ -3,7 +3,6 @@ import { ComponentType } from "react";
 export interface LocationStates {
   "/"?: {};
   "/#"?: {};
-  "/home-2"?: {};
   "/home-1-header-2"?: {};
   //
   "/listing-flights"?: {};

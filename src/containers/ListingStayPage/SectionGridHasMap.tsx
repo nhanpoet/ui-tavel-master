@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from "react";
 import AnyReactComponent from "components/AnyReactComponent/AnyReactComponent";
 import StayCardH from "components/StayCardH/StayCardH";
 import GoogleMapReact from "google-map-react";
-import { DEMO_STAY_LISTINGS } from "data/listings";
 import ButtonClose from "shared/ButtonClose/ButtonClose";
 import Checkbox from "shared/Checkbox/Checkbox";
 import Pagination from "shared/Pagination/Pagination";
@@ -24,6 +23,10 @@ const SectionGridHasMap: FC<SectionGridHasMapProps> = () => {
     });
   }, []);
 
+  const DEMO_DATA = listingData.filter((_, i) => i < 4);
+
+  console.log(DEMO_DATA);
+
   return (
     <div>
       <div className="relative flex min-h-screen">
@@ -34,7 +37,7 @@ const SectionGridHasMap: FC<SectionGridHasMapProps> = () => {
             <TabFilters />
           </div>
           <div className="grid grid-cols-1 gap-8">
-            {listingData.map((item: any) => (
+            {DEMO_DATA.map((item: any) => (
               <div
                 key={item.id}
                 onMouseEnter={() => setCurrentHoverID((_) => item.id)}
@@ -81,6 +84,24 @@ const SectionGridHasMap: FC<SectionGridHasMapProps> = () => {
               />
             </div>
             {/* BELLOW IS MY GOOGLE API KEY -- PLEASE DELETE AND TYPE YOUR API KEY */}
+            {/* <GoogleMapReact
+              bootstrapURLKeys={{
+                key: "AIzaSyB2KSGE4hAWAmSlSuCzMnD-Aq5lshPse3g",
+              }}
+              defaultZoom={12}
+              yesIWantToUseGoogleMapApiInternals
+              defaultCenter={DEMO_DATA[0].map }
+            >
+              {DEMO_DATA.map((item: any) => (
+                <AnyReactComponent
+                  isSelected={currentHoverID === item.id}
+                  key={item.id}
+                  lat={item.map.lat}
+                  lng={item.map.lng}
+                  listing={item}
+                />
+              ))}
+            </GoogleMapReact> */}
           </div>
         </div>
       </div>

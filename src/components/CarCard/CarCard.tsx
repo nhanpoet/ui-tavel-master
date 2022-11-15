@@ -35,6 +35,7 @@ const CarCard: FC<CarCardProps> = ({
     gearshift,
   } = data;
 
+  console.log(featuredImage);
   const renderSliderGallery = () => {
     return (
       <div className="relative w-full rounded-2xl overflow-hidden">
@@ -42,7 +43,7 @@ const CarCard: FC<CarCardProps> = ({
           <NcImage
             containerClassName="flex items-center justify-center"
             className="w-full"
-            src={featuredImage}
+            src={`/static/media/${featuredImage}`}
           />
         </div>
         <BtnLikeIcon isLiked={like} className="absolute right-3 top-3 z-[1]" />

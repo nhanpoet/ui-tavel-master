@@ -2,11 +2,11 @@ import React, { FC } from "react";
 import Logo from "shared/Logo/Logo";
 import MenuBar from "shared/MenuBar/MenuBar";
 import SwitchDarkMode from "shared/SwitchDarkMode/SwitchDarkMode";
-import LangDropdown from "./LangDropdown";
 import NotifyDropdown from "./NotifyDropdown";
 import AvatarDropdown from "./AvatarDropdown";
-import CurrencyDropdown from "./CurrencyDropdown";
 import DropdownTravelers from "./DropdownTravelers";
+import ButtonPrimary from "shared/Button/ButtonPrimary";
+
 import { Link } from "react-router-dom";
 
 export interface MainNav2Props {
@@ -30,8 +30,6 @@ const MainNav2: FC<MainNav2Props> = ({ isTop }) => {
         </div>
         <div className="flex-shrink-0 flex items-center justify-end text-neutral-700 dark:text-neutral-100 space-x-1">
           <div className="hidden items-center xl:flex space-x-1">
-            <CurrencyDropdown />
-            <LangDropdown />
             <Link
               to="/add-listing-1"
               className="
@@ -45,11 +43,13 @@ const MainNav2: FC<MainNav2Props> = ({ isTop }) => {
             <SwitchDarkMode />
             <NotifyDropdown />
             <div></div>
-            <AvatarDropdown />
+            {/* <AvatarDropdown /> */}
+            <div className="px-1" />
+            <ButtonPrimary href="/login">Sign up</ButtonPrimary>
           </div>
           <div className="flex items-center space-x-4 xl:hidden">
             <NotifyDropdown />
-            <AvatarDropdown />
+            {/* <AvatarDropdown /> */}
             <MenuBar />
           </div>
         </div>

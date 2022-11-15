@@ -22,6 +22,9 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
       setListingData(response.data);
     });
   }, []);
+
+  const DEMO_DATA = listingData.filter((_, i) => i < 4);
+
   return (
     <div
       className={`nc-SectionGridFilterCard ${className}`}
@@ -33,7 +36,7 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
         <TabFilters />
       </div>
       <div className="grid grid-cols-1 gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {listingData.map((stay) => (
+        {DEMO_DATA.map((stay) => (
           <StayCard key={stay.id} data={stay} />
         ))}
       </div>

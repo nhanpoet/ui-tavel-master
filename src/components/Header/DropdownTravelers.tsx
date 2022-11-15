@@ -7,7 +7,7 @@ const solutions = [
   {
     name: "Stays",
     description: "Stays rental description ",
-    href: "##",
+    href: "/listing-stay",
     icon: IconFour,
     active: true,
   },

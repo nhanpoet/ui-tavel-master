@@ -63,7 +63,7 @@ export default class PageLogin extends React.Component<any, any> {
       .then((response) => {
         console.log(response);
         if (response.ok) {
-          return this.props.history.push(`/home-1-header-2`);
+          return this.props.history.push(`/`);
         }
         throw Error(response.status.toString());
       })

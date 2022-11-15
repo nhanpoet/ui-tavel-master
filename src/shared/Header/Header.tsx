@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import MainNav1 from "./MainNav1";
+import MainNav2 from "../../components/Header/MainNav2";
 import { Helmet } from "react-helmet";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -34,11 +34,11 @@ const Header: FC<HeaderProps> = () => {
       className="nc-Header lg:sticky lg:top-0 w-full lg:left-0 lg:right-0 z-40"
     >
       <Helmet>
-        <title>Chisfis || Booking React Template</title>
+        <title>TravelMaster || Booking React Template</title>
       </Helmet>
 
       {/* NAV */}
-      <MainNav1 isTop={isTop} />
+      <MainNav2 isTop={isTop} />
     </div>
   );
 };
