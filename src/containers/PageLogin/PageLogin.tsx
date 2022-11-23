@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import facebookSvg from "images/Facebook.svg";
 import twitterSvg from "images/Twitter.svg";
 import googleSvg from "images/Google.svg";
@@ -34,9 +34,8 @@ export default class PageLogin extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      enCode: "",
-      ecEmail: "",
-      ecPassword: "",
+      userEmail: "",
+      userPassword: "",
     };
   }
 
@@ -49,9 +48,8 @@ export default class PageLogin extends React.Component<any, any> {
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
     var urlencoded = new URLSearchParams();
-    urlencoded.append("enCode", this.state.enCode);
-    urlencoded.append("ecEmail", this.state.ecEmail);
-    urlencoded.append("ecPassword", this.state.ecPassword);
+    urlencoded.append("userEmail", this.state.userEmail);
+    urlencoded.append("userPassword", this.state.userPassword);
 
     var requestOptions = {
       method: "POST",
@@ -59,7 +57,7 @@ export default class PageLogin extends React.Component<any, any> {
       body: urlencoded,
     };
 
-    fetch("http://localhost:8080/api/login", requestOptions)
+    fetch("http://localhost:8080/api/login_user", requestOptions)
       .then((response) => {
         console.log(response);
         if (response.ok) {
@@ -117,22 +115,11 @@ export default class PageLogin extends React.Component<any, any> {
             <form className="grid grid-cols-1 gap-6">
               <label className="block">
                 <span className="text-neutral-800 dark:text-neutral-200">
-                  Code
-                </span>
-                <Input
-                  type="text"
-                  name="enCode"
-                  onChange={this.setParams}
-                  className="mt-1"
-                />
-              </label>
-              <label className="block">
-                <span className="text-neutral-800 dark:text-neutral-200">
                   Email address
                 </span>
                 <Input
                   type="email"
-                  name="ecEmail"
+                  name="userEmail"
                   onChange={this.setParams}
                   placeholder="example@example.com"
                   className="mt-1"
@@ -147,7 +134,7 @@ export default class PageLogin extends React.Component<any, any> {
                 </span>
                 <Input
                   type="password"
-                  name="ecPassword"
+                  name="userPassword"
                   onChange={this.setParams}
                   className="mt-1"
                 />

@@ -33,7 +33,7 @@ const SectionGridFeaturePlaces: FC<SectionGridFeaturePlacesProps> = ({
   const [listingData, setListingData] = useState<StayDataType[]>([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/hotels").then((response) => {
+    axios.get("http://localhost:8080/api/hotel").then((response) => {
       setListingData(response.data);
     });
   }, []);
@@ -53,7 +53,9 @@ const SectionGridFeaturePlaces: FC<SectionGridFeaturePlacesProps> = ({
         {listingData.map((stay) => renderCard(stay))}
       </div>
       <div className="flex mt-16 justify-center items-center">
-        <ButtonPrimary loading>Show me more</ButtonPrimary>
+        <ButtonPrimary href={"/listing-stay"} loading>
+          Show me more
+        </ButtonPrimary>
       </div>
     </div>
   );
