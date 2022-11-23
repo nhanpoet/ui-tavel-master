@@ -20,35 +20,35 @@ const StayCard: FC<StayCardProps> = ({
   ratioClass,
 }) => {
   const {
-    hotel_Imgs = [],
+    hotelImg = [],
     listingCategory = { name: "" },
-    hs_address = "",
-    hs_name = "",
-    bedrooms = 0,
+    hsAddress = "",
+    hsName = "",
+    hsBed = 0,
     // href = "",
     like = false,
-    saleOff = "",
+    hsSaleOff = "",
     isAds = "",
-    price = "",
-    reviewStart = 0,
-    reviewCount = 0,
-    id = "",
+    hsPrice = "",
+    hsReviewStar = 0,
+    hsReviewCount = 0,
+    hsId = "",
   }: any = data;
 
-  const urlImg = Array.prototype.map.call(hotel_Imgs, function (item) {
-    return item.url_img;
+  const urlImg = Array.prototype.map.call(hotelImg, function (item) {
+    return item.hiUrlImg;
   });
 
   const renderSliderGallery = () => {
     return (
       <div className="relative w-full">
         <GallerySlider
-          uniqueID={`stay-${Date.now()}-${id}`}
+          uniqueID={`stay-${Date.now()}-${hsId}`}
           ratioClass={ratioClass}
           galleryImgs={urlImg as any}
         />
         <BtnLikeIcon isLiked={like} className="absolute right-3 top-3 z-[1]" />
-        {saleOff && <SaleOffBadge className="absolute left-3 top-3" />}
+        {hsSaleOff && <SaleOffBadge className="absolute left-3 top-3" />}
       </div>
     );
   };
@@ -58,7 +58,7 @@ const StayCard: FC<StayCardProps> = ({
       <div className={size === "default" ? "p-4 space-y-4" : "p-3 space-y-2"}>
         <div className="space-y-2">
           <span className="text-sm text-neutral-500 dark:text-neutral-400">
-            {listingCategory?.name} · {bedrooms} beds
+            {listingCategory?.name} · {hsBed} beds
           </span>
           <div className="flex items-center space-x-2">
             {isAds && <Badge name="ADS" color="green" />}
@@ -67,7 +67,7 @@ const StayCard: FC<StayCardProps> = ({
                 size === "default" ? "text-lg" : "text-base"
               }`}
             >
-              <span className="line-clamp-1">{hs_name}</span>
+              <span className="line-clamp-1">{hsName}</span>
             </h2>
           </div>
           <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
@@ -93,22 +93,22 @@ const StayCard: FC<StayCardProps> = ({
                 />
               </svg>
             )}
-            <span className="">{hs_address}</span>
+            <span className="">{hsAddress}</span>
           </div>
         </div>
         <div className="w-14 border-b border-neutral-100 dark:border-neutral-800"></div>
         <div className="flex justify-between items-center">
           <span className="text-base font-semibold">
-            {price}
+            {hsPrice}
             {` `}
             {size === "default" && (
               <span className="text-sm text-neutral-500 dark:text-neutral-400 font-normal">
-                /night
+                $/night
               </span>
             )}
           </span>
-          {!!reviewStart && (
-            <StartRating reviewCount={reviewCount} point={reviewStart} />
+          {!!hsReviewStar && (
+            <StartRating reviewCount={hsReviewCount} point={hsReviewStar} />
           )}
         </div>
       </div>
@@ -120,7 +120,7 @@ const StayCard: FC<StayCardProps> = ({
       className={`nc-StayCard group relative bg-white dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-800 rounded-2xl overflow-hidden hover:shadow-xl transition-shadow ${className}`}
       data-nc-id="StayCard"
     >
-      <Link to={"/listing-stay-detail"}>
+      <Link to={`/listing-stay-detail/${hsId}`}>
         {renderSliderGallery()}
         {renderContent()}
       </Link>

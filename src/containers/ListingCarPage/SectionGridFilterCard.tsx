@@ -1,22 +1,31 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { DEMO_CAR_LISTINGS } from "data/listings";
 import { CarDataType } from "data/types";
 import Pagination from "shared/Pagination/Pagination";
 import TabFilters from "./TabFilters";
 import Heading2 from "components/Heading/Heading2";
 import CarCard from "components/CarCard/CarCard";
+import axios from "axios";
 
 export interface SectionGridFilterCardProps {
   className?: string;
   data?: CarDataType[];
 }
 
-const DEMO_DATA: CarDataType[] = DEMO_CAR_LISTINGS.filter((_, i) => i < 12);
-
 const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
   className = "",
-  data = DEMO_DATA,
+  data = [],
 }) => {
+  const [listingData, setListingData] = useState<CarDataType[]>([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:8080/api/car").then((response) => {
+      setListingData(response.data);
+    });
+  }, []);
+
+  const DEMO_DATA = listingData.filter((_, i) => i < 4);
+
   return (
     <div
       className={`nc-SectionGridFilterCard ${className}`}
@@ -37,8 +46,8 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
         <TabFilters />
       </div>
       <div className="grid grid-cols-1 gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {data.map((car) => (
-          <CarCard key={car.id} data={car} />
+        {DEMO_DATA.map((car: any) => (
+          <CarCard key={car.carId} data={car} />
         ))}
       </div>
       <div className="flex mt-16 justify-center items-center">

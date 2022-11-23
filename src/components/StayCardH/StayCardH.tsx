@@ -20,34 +20,35 @@ const StayCardH: FC<StayCardHProps> = ({
   data = DEMO_DATA,
 }) => {
   const {
-    hotel_Imgs = [],
+    hotelImg = [],
     listingCategory = { name: "" },
-    hs_address = "",
-    hs_name = "",
-    href = "",
+    hsAddress = "",
+    hsName = "",
+    hsBed = 0,
+    // href = "",
     like = false,
-    saleOff = "",
+    hsSaleOff = "",
     isAds = "",
-    price = "",
-    reviewStart = 0,
-    reviewCount = 0,
-    id = "",
-  } = data;
+    hsPrice = "",
+    hsReviewStar = 0,
+    hsReviewCount = 0,
+    hsId = "",
+  }: any = data;
 
-  const urlImg = Array.prototype.map.call(hotel_Imgs, function (item) {
-    return item.url_img;
+  const urlImg = Array.prototype.map.call(hotelImg, function (item) {
+    return item.hiUrlImg;
   });
 
   const renderSliderGallery = () => {
-    return ( 
+    return (
       <div className="relative flex-shrink-0 w-full sm:w-72 ">
         <GallerySlider
           ratioClass="aspect-w-6 aspect-h-5"
           galleryImgs={urlImg as any}
-          uniqueID={`stay-${Date.now()}-${id}`}
+          uniqueID={`stay-${Date.now()}-${hsId}`}
         />
         <BtnLikeIcon isLiked={like} className="absolute right-3 top-3" />
-        {saleOff && <SaleOffBadge className="absolute left-3 top-3" />}
+        {hsSaleOff && <SaleOffBadge className="absolute left-3 top-3" />}
       </div>
     );
   };
@@ -65,7 +66,7 @@ const StayCardH: FC<StayCardHProps> = ({
           <div className="flex items-center space-x-3">
             <i className="las la-bed text-lg"></i>
             <span className="text-sm text-neutral-500 dark:text-neutral-400">
-              6 beds
+              {hsBed} beds
             </span>
           </div>
         </div>
@@ -107,13 +108,13 @@ const StayCardH: FC<StayCardHProps> = ({
         <div className="space-y-2">
           <div className="text-sm text-neutral-500 dark:text-neutral-400">
             <span>
-              {listingCategory?.name} in {hs_address}
+              {listingCategory?.name} in {hsAddress}
             </span>
           </div>
           <div className="flex items-center space-x-2">
             {isAds && <Badge name="ADS" color="green" />}
             <h2 className="text-lg font-medium capitalize">
-              <span className="line-clamp-1">{hs_name}</span>
+              <span className="line-clamp-1">{hsName}</span>
             </h2>
           </div>
         </div>
@@ -121,12 +122,12 @@ const StayCardH: FC<StayCardHProps> = ({
         {renderTienIch()}
         <div className="w-14 border-b border-neutral-100 dark:border-neutral-800 my-4"></div>
         <div className="flex justify-between items-end">
-          <StartRating reviewCount={reviewCount} point={reviewStart} />
+          <StartRating reviewCount={hsReviewCount} point={hsReviewStar} />
           <span className="text-base font-semibold text-secondary-500">
-            {price}
+            {hsPrice}
             {` `}
             <span className="text-sm text-neutral-500 dark:text-neutral-400 font-normal">
-              /night
+              $/night
             </span>
           </span>
         </div>
@@ -139,7 +140,10 @@ const StayCardH: FC<StayCardHProps> = ({
       className={`nc-StayCardH group relative bg-white dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-800 rounded-2xl overflow-hidden hover:shadow-xl transition-shadow ${className}`}
       data-nc-id="StayCardH"
     >
-      <Link to={href} className="flex flex-col sm:flex-row sm:items-center">
+      <Link
+        to={`/listing-stay-detail/${hsId}`}
+        className="flex flex-col sm:flex-row sm:items-center"
+      >
         {renderSliderGallery()}
         {renderContent()}
       </Link>

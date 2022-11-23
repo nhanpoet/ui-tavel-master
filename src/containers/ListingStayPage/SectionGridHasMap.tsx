@@ -18,7 +18,7 @@ const SectionGridHasMap: FC<SectionGridHasMapProps> = () => {
   const [listingData, setListingData] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/hotels").then((response) => {
+    axios.get("http://localhost:8080/api/hotel").then((response) => {
       setListingData(response.data);
     });
   }, []);
@@ -84,24 +84,24 @@ const SectionGridHasMap: FC<SectionGridHasMapProps> = () => {
               />
             </div>
             {/* BELLOW IS MY GOOGLE API KEY -- PLEASE DELETE AND TYPE YOUR API KEY */}
-            {/* <GoogleMapReact
+            <GoogleMapReact
               bootstrapURLKeys={{
                 key: "AIzaSyB2KSGE4hAWAmSlSuCzMnD-Aq5lshPse3g",
               }}
               defaultZoom={12}
               yesIWantToUseGoogleMapApiInternals
-              defaultCenter={DEMO_DATA[0].map }
+              defaultCenter={{ lat: 35.689487, lng: 139.691711 }}
             >
               {DEMO_DATA.map((item: any) => (
                 <AnyReactComponent
                   isSelected={currentHoverID === item.id}
-                  key={item.id}
-                  lat={item.map.lat}
-                  lng={item.map.lng}
+                  key={item.hsId}
+                  lat={35.689487}
+                  lng={139.691711}
                   listing={item}
                 />
               ))}
-            </GoogleMapReact> */}
+            </GoogleMapReact>
           </div>
         </div>
       </div>

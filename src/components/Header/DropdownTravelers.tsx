@@ -12,12 +12,6 @@ const solutions = [
     active: true,
   },
   {
-    name: "Flights",
-    description: "Flights description",
-    href: "##",
-    icon: IconTwo,
-  },
-  {
     name: "Things to do",
     description: "Tour and experiences",
     href: "##",
@@ -26,7 +20,7 @@ const solutions = [
   {
     name: "Cars",
     description: "Car rental description",
-    href: "##",
+    href: "/listing-car",
     icon: IconThree,
   },
 ];

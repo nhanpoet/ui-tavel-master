@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useState } from "react";
+import React, { FC, Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ArrowRightIcon } from "@heroicons/react/outline";
 import LocationMarker from "components/AnyReactComponent/LocationMarker";
@@ -25,6 +25,7 @@ import ModalPhotos from "./ModalPhotos";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import SectionSliderNewCategories from "components/SectionSliderNewCategories/SectionSliderNewCategories";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
+import axios from "axios";
 
 export interface ListingStayDetailPageProps {
   className?: string;
@@ -83,6 +84,16 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
     startDate: moment(),
     endDate: moment().add(4, "days"),
   });
+  // eslint-disable-next-line no-restricted-globals
+  const id = location.pathname.split("/")[3];
+
+  const [listingData, setListingData]: any = useState([]);
+
+  useEffect(() => {
+    axios.get(`http://localhost:8080/api/hotel/${id}`).then((response) => {
+      setListingData(response.data);
+    });
+  }, []);
 
   const [focusedInputSectionCheckDate, setFocusedInputSectionCheckDate] =
     useState<FocusedInputShape>("startDate");
@@ -129,7 +140,7 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
 
         {/* 2 */}
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold">
-          Beach House in Collingwood
+          {listingData.hsName}
         </h2>
 
         {/* 3 */}
@@ -698,9 +709,10 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
               <NcImage
                 containerClassName="absolute inset-0"
                 className="object-cover w-full h-full rounded-md sm:rounded-xl"
-                src={PHOTOS[0]}
+                src={listingData.hsImg}
                 prevImageHorizontal
               />
+
               <div className="absolute inset-0 bg-neutral-900 bg-opacity-20 opacity-0 hover:opacity-100 transition-opacity"></div>
             </div>
             {PHOTOS.filter((_, i) => i >= 1 && i < 5).map((item, index) => (
