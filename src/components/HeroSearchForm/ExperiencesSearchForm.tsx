@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
-import LocationInput from "./LocationInput";
-import GuestsInput, { GuestsInputProps } from "./GuestsInput";
-import ExperiencesDateSingleInput from "./ExperiencesDateSingleInput";
-import ButtonSubmit from "./ButtonSubmit";
 import moment from "moment";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
+import ButtonSubmit2 from "./ButtonSubmit2";
+import ExperiencesDateSingleInput from "./ExperiencesDateSingleInput";
+import GuestsInput, { GuestsInputProps } from "./GuestsInput";
+import LocationInput from "./LocationInput";
 
 // DEFAULT DATA FOR ARCHIVE PAGE
 const defaultLocationValue = "Tokyo, Jappan";
@@ -63,7 +62,7 @@ const ExperiencesSearchForm: FC<ExperiencesSearchFormProps> = ({
         />
         {/* BUTTON SUBMIT OF FORM */}
         <div className="px-4 py-4 lg:py-0">
-          <ButtonSubmit />
+          <ButtonSubmit2 />
         </div>
       </form>
     );

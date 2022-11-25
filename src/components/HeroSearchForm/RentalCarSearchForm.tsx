@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
-import LocationInput from "./LocationInput";
-import { FocusedInputShape } from "react-dates";
-import RentalCarDatesRangeInput from "./RentalCarDatesRangeInput";
-import ButtonSubmit from "./ButtonSubmit";
-import { FC } from "react";
 import moment from "moment";
+import { FC, useEffect, useState } from "react";
+import { FocusedInputShape } from "react-dates";
+import ButtonSubmit1 from "./ButtonSubmit1";
+import LocationInput from "./LocationInput";
+import RentalCarDatesRangeInput from "./RentalCarDatesRangeInput";
 
 export interface DateRage {
   startDate: moment.Moment | null;
@@ -131,7 +130,7 @@ const RentalCarSearchForm: FC<RentalCarSearchFormProps> = ({
             />
             {/* BUTTON SUBMIT OF FORM */}
             <div className="px-4 py-3">
-              <ButtonSubmit />
+              <ButtonSubmit1 />
             </div>
           </div>
         </form>

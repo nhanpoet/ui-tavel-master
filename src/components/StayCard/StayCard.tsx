@@ -21,7 +21,7 @@ const StayCard: FC<StayCardProps> = ({
 }) => {
   const {
     hotelImg = [],
-    listingCategory = { name: "" },
+    // listingCategory = { name: "" },
     hsAddress = "",
     hsName = "",
     hsBed = 0,
@@ -58,7 +58,7 @@ const StayCard: FC<StayCardProps> = ({
       <div className={size === "default" ? "p-4 space-y-4" : "p-3 space-y-2"}>
         <div className="space-y-2">
           <span className="text-sm text-neutral-500 dark:text-neutral-400">
-            {listingCategory?.name} · {hsBed} beds
+            Entire cabin · {hsBed} beds
           </span>
           <div className="flex items-center space-x-2">
             {isAds && <Badge name="ADS" color="green" />}

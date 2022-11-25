@@ -14,7 +14,7 @@ const solutions = [
   {
     name: "Things to do",
     description: "Tour and experiences",
-    href: "##",
+    href: "/listing-experiences",
     icon: IconOne,
   },
   {
@@ -141,27 +141,6 @@ function IconOne() {
         strokeLinejoin="round"
         strokeWidth="1.5"
         d="M7.75 10.75H16.25"
-      ></path>
-    </svg>
-  );
-}
-
-function IconTwo() {
-  return (
-    <svg width="36" height="36" fill="none" viewBox="0 0 24 24">
-      <path
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-        d="M4.75 19.25L12 4.75L19.25 19.25L12 15.75L4.75 19.25Z"
-      ></path>
-      <path
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-        d="M12 15.5V12.75"
       ></path>
     </svg>
   );

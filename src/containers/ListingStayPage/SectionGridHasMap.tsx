@@ -25,8 +25,6 @@ const SectionGridHasMap: FC<SectionGridHasMapProps> = () => {
 
   const DEMO_DATA = listingData.filter((_, i) => i < 4);
 
-  console.log(DEMO_DATA);
-
   return (
     <div>
       <div className="relative flex min-h-screen">

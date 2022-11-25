@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { DEMO_CAR_LISTINGS } from "data/listings";
 import { CarDataType } from "data/types";
 import StartRating from "components/StartRating/StartRating";
@@ -8,37 +8,47 @@ import SaleOffBadge from "components/SaleOffBadge/SaleOffBadge";
 import Badge from "shared/Badge/Badge";
 import Avatar from "shared/Avatar/Avatar";
 import NcImage from "shared/NcImage/NcImage";
+import axios from "axios";
 
 export interface CarCardHProps {
   className?: string;
   data?: CarDataType;
 }
 
-const DEMO_DATA: CarDataType = DEMO_CAR_LISTINGS[0];
+const DEMO_DATA = DEMO_CAR_LISTINGS[0];
 
 const CarCardH: FC<CarCardHProps> = ({ className = "", data = DEMO_DATA }) => {
   const {
-    address,
-    title,
-    href,
+    carImg,
+    carName,
+    // href,
     like,
-    saleOff,
-    isAds,
-    price,
-    reviewStart,
-    reviewCount,
-    author,
-    featuredImage,
-  } = data;
+    carSaleOff,
+    // isAds,
+    carPrice,
+    carReviewStar,
+    carReviewCount,
+    // carSeats,
+    // gearshift,
+    carId,
+  }: any = data;
+
+  const [listingData, setListingData]: any = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:8080/api/enac/1").then((response) => {
+      setListingData(response.data);
+    });
+  }, []);
 
   const renderSliderGallery = () => {
     return (
       <div className="relative w-full flex items-center justify-center md:w-72 flex-shrink-0 border-r border-neutral-100 dark:border-neutral-800">
         <div className="w-full py-5 sm:py-0">
-          <NcImage className="w-full" src={featuredImage} />
+          <NcImage className="w-full" src={carImg} />
         </div>
         <BtnLikeIcon isLiked={like} className="absolute right-3 top-3" />
-        {saleOff && <SaleOffBadge className="absolute left-3 top-3" />}
+        {carSaleOff && <SaleOffBadge className="absolute left-3 top-3" />}
       </div>
     );
   };
@@ -48,19 +58,19 @@ const CarCardH: FC<CarCardHProps> = ({ className = "", data = DEMO_DATA }) => {
       <div className="flex-grow p-3 sm:p-5 flex flex-col">
         <div className="space-y-2">
           <div className="flex items-center space-x-2">
-            {isAds && <Badge name="ADS" color="green" />}
+            {carSaleOff && <Badge name="ADS" color="green" />}
             <h2 className="text-xl font-semibold capitalize">
-              <span className="line-clamp-1">{title}</span>
+              <span className="line-clamp-1">{carName}</span>
             </h2>
           </div>
           <div className="flex items-center space-x-4 text-sm text-neutral-500 dark:text-neutral-400">
-            <StartRating reviewCount={reviewCount} point={reviewStart} />
+            <StartRating reviewCount={carReviewCount} point={carReviewStar} />
             <span>· </span>
             <div className="flex items-center">
               <span className="hidden sm:inline-block  text-base">
                 <i className="las la-map-marked"></i>
               </span>
-              <span className="sm:ml-2 line-clamp-1"> {address}</span>
+              <span className="sm:ml-2 line-clamp-1"> Tokyo, Japan </span>
             </div>
           </div>
         </div>
@@ -101,17 +111,20 @@ const CarCardH: FC<CarCardHProps> = ({ className = "", data = DEMO_DATA }) => {
         <div className="w-14 border-b border-neutral-100 dark:border-neutral-800 my-4"></div>
         <div className="flex justify-between items-end">
           <div className="flex items-center space-x-3 text-sm text-neutral-700  dark:text-neutral-300">
-            <Avatar imgUrl={author.avatar} userName={author.displayName} />
+            <Avatar
+              imgUrl={listingData.ecAvatar}
+              userName={listingData.ecName}
+            />
             <span className="hidden sm:inline-block">
               <span className="hidden sm:inline">Car owner </span>{" "}
-              {author.displayName}
+              {listingData.ecName}
             </span>
           </div>
           <span className="text-lg font-semibold text-secondary-700">
-            {price}
+            {carPrice}
             {` `}
             <span className="text-sm text-neutral-500 dark:text-neutral-400 font-normal">
-              /day
+              $/day
             </span>
           </span>
         </div>
@@ -124,7 +137,10 @@ const CarCardH: FC<CarCardHProps> = ({ className = "", data = DEMO_DATA }) => {
       className={`nc-CarCardH group relative bg-white dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-800 rounded-2xl overflow-hidden hover:shadow-xl transition-shadow ${className}`}
       data-nc-id="CarCardH"
     >
-      <Link to={href} className="flex flex-col md:flex-row">
+      <Link
+        to={`/listing-car-detail/${carId}`}
+        className="flex flex-col md:flex-row"
+      >
         {renderSliderGallery()}
         {renderContent()}
       </Link>

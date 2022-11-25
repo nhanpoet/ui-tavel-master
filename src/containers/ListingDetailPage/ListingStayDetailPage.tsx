@@ -145,7 +145,10 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
 
         {/* 3 */}
         <div className="flex items-center space-x-4">
-          <StartRating />
+          <StartRating
+            reviewCount={listingData.hsReviewCount}
+            point={listingData.hsReviewStar}
+          />
           <span>·</span>
           <span>
             <i className="las la-map-marker-alt"></i>
@@ -428,7 +431,10 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
               Kevin Francis
             </a>
             <div className="mt-1.5 flex items-center text-sm text-neutral-500 dark:text-neutral-400">
-              <StartRating />
+              <StartRating
+                reviewCount={listingData.hsReviewCount}
+                point={listingData.hsReviewStar}
+              />
               <span className="mx-2">·</span>
               <span> 12 places</span>
             </div>
@@ -646,7 +652,10 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
               /night
             </span>
           </span>
-          <StartRating />
+          <StartRating
+            reviewCount={listingData.hsReviewCount}
+            point={listingData.hsReviewStar}
+          />
         </div>
 
         {/* FORM */}

@@ -15,38 +15,40 @@ export interface ExperiencesCardProps {
   size?: "default" | "small";
 }
 
-const DEMO_DATA: ExperiencesDataType = DEMO_EXPERIENCES_LISTINGS[0];
-
 const ExperiencesCard: FC<ExperiencesCardProps> = ({
   size = "default",
   className = "",
-  data = DEMO_DATA,
+  data = "",
   ratioClass = "aspect-w-3 aspect-h-3",
 }) => {
   const {
-    galleryImgs,
-    address,
-    title,
-    href,
+    ex_Imgs = [],
+    // address,
+    exName,
+    // href,
     like,
-    saleOff,
+    exSaleOff,
     isAds,
-    price,
-    reviewStart,
-    reviewCount,
-    id,
-  } = data;
+    exPrice,
+    exReviewStar,
+    exReviewCount,
+    exId,
+  }: any = data;
+
+  const urlImg = Array.prototype.map.call(ex_Imgs, function (item) {
+    return item.urlImg;
+  });
 
   const renderSliderGallery = () => {
     return (
       <div className="relative w-full rounded-2xl overflow-hidden">
         <GallerySlider
-          uniqueID={`ExperiencesCard-${id}`}
+          uniqueID={`stay-${Date.now()}-${exId}`}
           ratioClass={ratioClass}
-          galleryImgs={galleryImgs}
+          galleryImgs={urlImg as any}
         />
         <BtnLikeIcon isLiked={like} className="absolute right-3 top-3" />
-        {saleOff && <SaleOffBadge className="absolute left-3 top-3" />}
+        {exSaleOff && <SaleOffBadge className="absolute left-3 top-3" />}
       </div>
     );
   };
@@ -78,7 +80,7 @@ const ExperiencesCard: FC<ExperiencesCardProps> = ({
                 />
               </svg>
             )}
-            <span className="">{address}</span>
+            <span className="">Tokyo, Japan</span>
           </div>
 
           <div className="flex items-center space-x-2">
@@ -88,22 +90,22 @@ const ExperiencesCard: FC<ExperiencesCardProps> = ({
                 size === "default" ? "text-base" : "text-base"
               }`}
             >
-              <span className="line-clamp-1">{title}</span>
+              <span className="line-clamp-1">{exName}</span>
             </h2>
           </div>
         </div>
         <div className="border-b border-neutral-100 dark:border-neutral-800"></div>
         <div className="flex justify-between items-center">
           <span className="text-base font-semibold">
-            {price}
+            {exPrice}
             {` `}
             {size === "default" && (
               <span className="text-sm text-neutral-500 dark:text-neutral-400 font-normal">
-                /person
+                $/person
               </span>
             )}
           </span>
-          <StartRating reviewCount={reviewCount} point={reviewStart} />
+          <StartRating reviewCount={exReviewCount} point={exReviewStar} />
         </div>
       </div>
     );
@@ -114,7 +116,7 @@ const ExperiencesCard: FC<ExperiencesCardProps> = ({
       className={`nc-ExperiencesCard group relative ${className}`}
       data-nc-id="ExperiencesCard"
     >
-      <Link to={href}>
+      <Link to={`/listing-experiences-detail/${exId}`}>
         {renderSliderGallery()}
         {renderContent()}
       </Link>

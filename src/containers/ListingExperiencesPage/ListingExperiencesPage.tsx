@@ -1,12 +1,12 @@
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
-import SectionHeroArchivePage from "components/SectionHeroArchivePage/SectionHeroArchivePage";
+import SectionHeroArchivePage2 from "components/SectionHeroArchivePage/SectionHeroArchivePage2";
 import SectionSliderNewCategories from "components/SectionSliderNewCategories/SectionSliderNewCategories";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import { TaxonomyType } from "data/types";
-import React, { FC } from "react";
-import SectionGridFilterCard from "./SectionGridFilterCard";
+import { FC } from "react";
 import { Helmet } from "react-helmet";
+import SectionGridFilterCard from "./SectionGridFilterCard";
 
 export interface ListingExperiencesPageProps {
   className?: string;
@@ -80,7 +80,7 @@ const ListingExperiencesPage: FC<ListingExperiencesPageProps> = ({
 
       <div className="container relative">
         {/* SECTION HERO */}
-        <SectionHeroArchivePage
+        <SectionHeroArchivePage2
           currentPage="Experiences"
           currentTab="Experiences"
           listingType={

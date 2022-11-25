@@ -1,24 +1,29 @@
-import React, { FC } from "react";
-import { DEMO_EXPERIENCES_LISTINGS } from "data/listings";
-import { ExperiencesDataType, StayDataType } from "data/types";
+import axios from "axios";
+import ExperiencesCard from "components/ExperiencesCard/ExperiencesCard";
+import Heading2 from "components/Heading/Heading2";
+import { ExperiencesDataType } from "data/types";
+import { FC, useEffect, useState } from "react";
 import Pagination from "shared/Pagination/Pagination";
 import TabFilters from "./TabFilters";
-import Heading2 from "components/Heading/Heading2";
-import ExperiencesCard from "components/ExperiencesCard/ExperiencesCard";
 
 export interface SectionGridFilterCardProps {
   className?: string;
-  data?: StayDataType[];
+  data?: ExperiencesDataType[];
 }
-
-const DEMO_DATA: ExperiencesDataType[] = DEMO_EXPERIENCES_LISTINGS.filter(
-  (_, i) => i < 8
-);
 
 const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
   className = "",
-  data = DEMO_DATA,
+  data = [],
 }) => {
+  const [listingData, setListingData] = useState<ExperiencesDataType[]>([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:8080/api/experiences/").then((response) => {
+      setListingData(response.data);
+    });
+  }, []);
+
+  const DEMO_DATA = listingData.filter((_, i) => i < 4);
   return (
     <div
       className={`nc-SectionGridFilterCard ${className}`}
@@ -40,7 +45,7 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
         <TabFilters />
       </div>
       <div className="grid grid-cols-1 gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-        {data.map((stay: any) => (
+        {DEMO_DATA.map((stay: any) => (
           <ExperiencesCard key={stay.id} data={stay as any} />
         ))}
       </div>

@@ -1,12 +1,12 @@
-import React, { FC } from "react";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
 import SectionGridAuthorBox from "components/SectionGridAuthorBox/SectionGridAuthorBox";
-import SectionHeroArchivePage from "components/SectionHeroArchivePage/SectionHeroArchivePage";
+import SectionHeroArchivePage2 from "components/SectionHeroArchivePage/SectionHeroArchivePage2";
 import SectionSliderNewCategories from "components/SectionSliderNewCategories/SectionSliderNewCategories";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
-import SectionGridHasMap from "./SectionGridHasMap";
+import { FC } from "react";
 import { Helmet } from "react-helmet";
+import SectionGridHasMap from "./SectionGridHasMap";
 
 export interface ListingExperiencesMapPageProps {
   className?: string;
@@ -21,13 +21,13 @@ const ListingExperiencesMapPage: FC<ListingExperiencesMapPageProps> = ({
       data-nc-id="ListingExperiencesMapPage"
     >
       <Helmet>
-        <title>Chisfis || Booking React Template</title>
+        <title>TravelMaster || Booking React Template</title>
       </Helmet>
       <BgGlassmorphism />
 
       {/* SECTION HERO */}
       <div className="container pt-10 pb-24 lg:pt-16 lg:pb-32">
-        <SectionHeroArchivePage
+        <SectionHeroArchivePage2
           currentPage="Experiences"
           currentTab="Experiences"
           listingType={

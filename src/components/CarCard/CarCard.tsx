@@ -28,7 +28,7 @@ const CarCard: FC<CarCardProps> = ({
     carReviewStar,
     carReviewCount,
     carSeats,
-    gearshift,
+    // gearshift,
     carId,
   }: any = data;
 
@@ -40,7 +40,7 @@ const CarCard: FC<CarCardProps> = ({
           <NcImage
             containerClassName="flex items-center justify-center"
             className="w-full"
-            src={`./static/media/${carImg}`}
+            src={carImg}
           />
         </div>
         <BtnLikeIcon isLiked={like} className="absolute right-3 top-3 z-[1]" />
