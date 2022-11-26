@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import AnyReactComponent from "components/AnyReactComponent/AnyReactComponent";
 import GoogleMapReact from "google-map-react";
 import { DEMO_EXPERIENCES_LISTINGS } from "data/listings";
@@ -8,14 +8,23 @@ import Pagination from "shared/Pagination/Pagination";
 import TabFilters from "./TabFilters";
 import Heading2 from "components/Heading/Heading2";
 import ExperiencesCardH from "components/ExperiencesCardH/ExperiencesCardH";
-
-const DEMO_EXPERIENCES = DEMO_EXPERIENCES_LISTINGS.filter((_, i) => i < 12);
+import axios from "axios";
 
 export interface SectionGridHasMapProps {}
 
 const SectionGridHasMap: FC<SectionGridHasMapProps> = () => {
   const [currentHoverID, setCurrentHoverID] = useState<string | number>(-1);
   const [showFullMapFixed, setShowFullMapFixed] = useState(false);
+
+  const [listingData, setListingData] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:8080/api/experiences/").then((response) => {
+      setListingData(response.data);
+    });
+  }, []);
+
+  const DEMO_DATA = listingData.filter((_, i) => i < 4);
 
   return (
     <div>
@@ -37,7 +46,7 @@ const SectionGridHasMap: FC<SectionGridHasMapProps> = () => {
             <TabFilters />
           </div>
           <div className="grid grid-cols-1 gap-8">
-            {DEMO_EXPERIENCES.map((item) => (
+            {DEMO_DATA.map((item: any) => (
               <div
                 key={item.id}
                 onMouseEnter={() => setCurrentHoverID((_) => item.id)}
@@ -85,18 +94,18 @@ const SectionGridHasMap: FC<SectionGridHasMapProps> = () => {
 
             <GoogleMapReact
               bootstrapURLKeys={{
-                key: "AIzaSyDxJaU8bLdx7sSJ8fcRdhYS1pLk8Jdvnx0",
+                key: "AIzaSyB2KSGE4hAWAmSlSuCzMnD-Aq5lshPse3g",
               }}
               defaultZoom={12}
               yesIWantToUseGoogleMapApiInternals
-              defaultCenter={DEMO_EXPERIENCES[0].map}
+              defaultCenter={{ lat: 35.689487, lng: 139.691711 }}
             >
-              {DEMO_EXPERIENCES.map((item) => (
+              {DEMO_DATA.map((item: any) => (
                 <AnyReactComponent
                   isSelected={currentHoverID === item.id}
-                  key={item.id}
-                  lat={item.map.lat}
-                  lng={item.map.lng}
+                  key={item.exId}
+                  lat={35.689487}
+                  lng={139.691711}
                   experiences={item}
                 />
               ))}

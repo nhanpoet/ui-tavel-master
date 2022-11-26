@@ -1,10 +1,12 @@
 import React, { FC } from "react";
 
 export interface CheckboxProps {
+  type?: any;
   label?: string;
   subLabel?: string;
   className?: string;
-  name: string;
+  name?: string;
+  value?: any;
   defaultChecked?: boolean;
   onChange?: (checked: boolean) => void;
 }

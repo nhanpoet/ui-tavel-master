@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { ArrowRightIcon } from "@heroicons/react/outline";
 import LocationMarker from "components/AnyReactComponent/LocationMarker";
 import CommentListing from "components/CommentListing/CommentListing";
@@ -22,6 +22,7 @@ import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import SectionSliderNewCategories from "components/SectionSliderNewCategories/SectionSliderNewCategories";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import ExperiencesDateSingleInput from "components/HeroSearchForm/ExperiencesDateSingleInput";
+import axios from "axios";
 
 export interface ListingExperiencesDetailPageProps {
   className?: string;
@@ -56,6 +57,35 @@ const ListingExperiencesDetailPage: FC<ListingExperiencesDetailPageProps> = ({
     moment().add(2, "days")
   );
 
+  // eslint-disable-next-line no-restricted-globals
+  const id = location.pathname.split("/")[3];
+
+  const [listingData, setListingData]: any = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/api/experiences/${id}`)
+      .then((response) => {
+        setListingData(response.data);
+      });
+  }, []);
+
+  const [enData, setEnData]: any = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:8080/api/enterprise/1").then((response) => {
+      setEnData(response.data);
+    });
+  }, []);
+
+  const [enacData, setEnacData]: any = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:8080/api/enac/1").then((response) => {
+      setEnacData(response.data);
+    });
+  }, []);
+
   const windowSize = useWindowSize();
 
   const getDaySize = () => {
@@ -89,12 +119,15 @@ const ListingExperiencesDetailPage: FC<ListingExperiencesDetailPageProps> = ({
 
         {/* 2 */}
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold">
-          Trang An Boat Tour & Mua Cave
+          {listingData.exName}
         </h2>
 
         {/* 3 */}
         <div className="flex items-center space-x-4">
-          <StartRating />
+          <StartRating
+            reviewCount={listingData.exReviewCount}
+            point={listingData.exReviewStar}
+          />
           <span>·</span>
           <span>
             <i className="las la-map-marker-alt"></i>
@@ -104,11 +137,16 @@ const ListingExperiencesDetailPage: FC<ListingExperiencesDetailPageProps> = ({
 
         {/* 4 */}
         <div className="flex items-center">
-          <Avatar hasChecked sizeClass="h-10 w-10" radius="rounded-full" />
+          <Avatar
+            imgUrl={enacData.ecAvatar}
+            hasChecked
+            sizeClass="h-10 w-10"
+            radius="rounded-full"
+          />
           <span className="ml-2.5 text-neutral-500 dark:text-neutral-400">
             Hosted by{" "}
             <span className="text-neutral-900 dark:text-neutral-200 font-medium">
-              Kevin Francis
+              {enData.enNamecompany}
             </span>
           </span>
         </div>
@@ -254,6 +292,7 @@ const ListingExperiencesDetailPage: FC<ListingExperiencesDetailPageProps> = ({
         {/* host */}
         <div className="flex items-center space-x-4">
           <Avatar
+            imgUrl={enacData.ecAvatar}
             hasChecked
             hasCheckedClass="w-4 h-4 -top-0.5 right-0.5"
             sizeClass="h-14 w-14"
@@ -261,10 +300,13 @@ const ListingExperiencesDetailPage: FC<ListingExperiencesDetailPageProps> = ({
           />
           <div>
             <a className="block text-xl font-medium" href="##">
-              Kevin Francis
+              {enData.enNamecompany}
             </a>
             <div className="mt-1.5 flex items-center text-sm text-neutral-500 dark:text-neutral-400">
-              <StartRating />
+              <StartRating
+                reviewCount={listingData.exReviewCount}
+                point={listingData.exReviewStar}
+              />
               <span className="mx-2">·</span>
               <span> 12 places</span>
             </div>
@@ -295,7 +337,7 @@ const ListingExperiencesDetailPage: FC<ListingExperiencesDetailPageProps> = ({
                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
               />
             </svg>
-            <span>Joined in March 2016</span>
+            <span>Joined in March 2022</span>
           </div>
           <div className="flex items-center space-x-3">
             <svg
@@ -337,7 +379,7 @@ const ListingExperiencesDetailPage: FC<ListingExperiencesDetailPageProps> = ({
         {/* == */}
         <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
         <div>
-          <ButtonSecondary href="##">See host profile</ButtonSecondary>
+          <ButtonSecondary href="/author">See host profile</ButtonSecondary>
         </div>
       </div>
     );
@@ -466,12 +508,15 @@ const ListingExperiencesDetailPage: FC<ListingExperiencesDetailPageProps> = ({
         {/* PRICE */}
         <div className="flex justify-between">
           <span className="text-3xl font-semibold">
-            $19
+            ${listingData.exPrice}
             <span className="ml-1 text-base font-normal text-neutral-500 dark:text-neutral-400">
               /person
             </span>
           </span>
-          <StartRating />
+          <StartRating
+            reviewCount={listingData.exReviewCount}
+            point={listingData.exReviewStar}
+          />
         </div>
 
         {/* FORM */}
@@ -500,8 +545,8 @@ const ListingExperiencesDetailPage: FC<ListingExperiencesDetailPageProps> = ({
         {/* SUM */}
         <div className="flex flex-col space-y-4">
           <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
-            <span>$19 x 3 adults</span>
-            <span>$57</span>
+            <span>${listingData.exPrice} x 3 adults</span>
+            <span>${listingData.exPrice * 3}</span>
           </div>
           <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
             <span>Service charge</span>
@@ -510,7 +555,7 @@ const ListingExperiencesDetailPage: FC<ListingExperiencesDetailPageProps> = ({
           <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
           <div className="flex justify-between font-semibold">
             <span>Total</span>
-            <span>$199</span>
+            <span>${listingData.exPrice * 3}</span>
           </div>
         </div>
 
@@ -536,7 +581,7 @@ const ListingExperiencesDetailPage: FC<ListingExperiencesDetailPageProps> = ({
               <NcImage
                 containerClassName="absolute inset-0"
                 className="object-cover w-full h-full rounded-md sm:rounded-xl"
-                src={PHOTOS[0]}
+                src={listingData.exImg}
                 prevImageHorizontal
               />
               <div className="absolute inset-0 bg-neutral-900 bg-opacity-20 opacity-0 hover:opacity-100 transition-opacity"></div>

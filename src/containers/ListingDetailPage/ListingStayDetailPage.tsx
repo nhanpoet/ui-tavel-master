@@ -26,6 +26,7 @@ import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import SectionSliderNewCategories from "components/SectionSliderNewCategories/SectionSliderNewCategories";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import axios from "axios";
+import Reserve from "components/Reserve/Reserve";
 
 export interface ListingStayDetailPageProps {
   className?: string;
@@ -84,6 +85,9 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
     startDate: moment(),
     endDate: moment().add(4, "days"),
   });
+
+  const [openModal, setOpenModal] = useState(false);
+
   // eslint-disable-next-line no-restricted-globals
   const id = location.pathname.split("/")[3];
 
@@ -92,6 +96,22 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
   useEffect(() => {
     axios.get(`http://localhost:8080/api/hotel/${id}`).then((response) => {
       setListingData(response.data);
+    });
+  }, []);
+
+  const [enData, setEnData]: any = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:8080/api/enterprise/1").then((response) => {
+      setEnData(response.data);
+    });
+  }, []);
+
+  const [enacData, setEnacData]: any = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:8080/api/enac/1").then((response) => {
+      setEnacData(response.data);
     });
   }, []);
 
@@ -158,11 +178,16 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
 
         {/* 4 */}
         <div className="flex items-center">
-          <Avatar hasChecked sizeClass="h-10 w-10" radius="rounded-full" />
+          <Avatar
+            imgUrl={enacData.ecAvatar}
+            hasChecked
+            sizeClass="h-10 w-10"
+            radius="rounded-full"
+          />
           <span className="ml-2.5 text-neutral-500 dark:text-neutral-400">
             Hosted by{" "}
             <span className="text-neutral-900 dark:text-neutral-200 font-medium">
-              Kevin Francis
+              {enData.enNamecompany}
             </span>
           </span>
         </div>
@@ -421,6 +446,7 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
         {/* host */}
         <div className="flex items-center space-x-4">
           <Avatar
+            imgUrl={enacData.ecAvatar}
             hasChecked
             hasCheckedClass="w-4 h-4 -top-0.5 right-0.5"
             sizeClass="h-14 w-14"
@@ -428,7 +454,7 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
           />
           <div>
             <a className="block text-xl font-medium" href="##">
-              Kevin Francis
+              {enData.enNamecompany}
             </a>
             <div className="mt-1.5 flex items-center text-sm text-neutral-500 dark:text-neutral-400">
               <StartRating
@@ -465,7 +491,7 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
               />
             </svg>
-            <span>Joined in March 2016</span>
+            <span>Joined in March 2022</span>
           </div>
           <div className="flex items-center space-x-3">
             <svg
@@ -507,10 +533,14 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
         {/* == */}
         <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
         <div>
-          <ButtonSecondary href="##">See host profile</ButtonSecondary>
+          <ButtonSecondary href="/author">See host profile</ButtonSecondary>
         </div>
       </div>
     );
+  };
+
+  const handleClick = () => {
+    setOpenModal(true);
   };
 
   const renderSection6 = () => {
@@ -560,7 +590,7 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
         <div>
           <h2 className="text-2xl font-semibold">Location</h2>
           <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
-            San Diego, CA, United States of America (SAN-San Diego Intl.)
+            Tokyo, Japan
           </span>
         </div>
         <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
@@ -570,16 +600,16 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
           <div className="rounded-xl overflow-hidden">
             <GoogleMapReact
               bootstrapURLKeys={{
-                key: "AIzaSyDxJaU8bLdx7sSJ8fcRdhYS1pLk8Jdvnx0",
+                key: "AIzaSyB2KSGE4hAWAmSlSuCzMnD-Aq5lshPse3g",
               }}
               defaultZoom={15}
               yesIWantToUseGoogleMapApiInternals
               defaultCenter={{
-                lat: 55.9607277,
-                lng: 36.2172614,
+                lat: 35.689487,
+                lng: 139.691711,
               }}
             >
-              <LocationMarker lat={55.9607277} lng={36.2172614} />
+              <LocationMarker lat={35.689487} lng={139.691711} />
             </GoogleMapReact>
           </div>
         </div>
@@ -647,9 +677,9 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
         {/* PRICE */}
         <div className="flex justify-between">
           <span className="text-3xl font-semibold">
-            $119
+            {listingData.hsPrice}
             <span className="ml-1 text-base font-normal text-neutral-500 dark:text-neutral-400">
-              /night
+              $/night
             </span>
           </span>
           <StartRating
@@ -682,8 +712,8 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
         {/* SUM */}
         <div className="flex flex-col space-y-4">
           <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
-            <span>$119 x 3 night</span>
-            <span>$357</span>
+            <span>${listingData.hsPrice} x 3 night</span>
+            <span>${listingData.hsPrice * 3}</span>
           </div>
           <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
             <span>Service charge</span>
@@ -692,12 +722,12 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
           <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
           <div className="flex justify-between font-semibold">
             <span>Total</span>
-            <span>$199</span>
+            <span>${listingData.hsPrice * 3}</span>
           </div>
         </div>
 
         {/* SUBMIT */}
-        <ButtonPrimary>Reserve</ButtonPrimary>
+        <ButtonPrimary onClick={handleClick}>Reserve</ButtonPrimary>
       </div>
     );
   };
@@ -811,7 +841,7 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
               </span>
             </span>
 
-            <ButtonPrimary href="##">Reserve</ButtonPrimary>
+            <ButtonPrimary onClick={handleClick}>Reserve</ButtonPrimary>
           </div>
         </div>
       )}
@@ -835,6 +865,7 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
           <SectionSubscribe2 className="pt-24 lg:pt-32" />
         </div>
       )}
+      {openModal && <Reserve setOpen={setOpenModal} hsId={listingData.hsId} />}
     </div>
   );
 };
