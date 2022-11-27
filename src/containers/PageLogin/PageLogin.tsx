@@ -1,11 +1,12 @@
-import React, { useContext } from "react";
 import facebookSvg from "images/Facebook.svg";
-import twitterSvg from "images/Twitter.svg";
 import googleSvg from "images/Google.svg";
+import twitterSvg from "images/Twitter.svg";
+import Cookies from "js-cookie";
+import React from "react";
 import { Helmet } from "react-helmet";
-import Input from "shared/Input/Input";
 import { Link } from "react-router-dom";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
+import Input from "shared/Input/Input";
 import swal from "sweetalert";
 
 export interface PageLoginProps {
@@ -58,12 +59,11 @@ export default class PageLogin extends React.Component<any, any> {
     };
 
     fetch("http://localhost:8080/api/login_user", requestOptions)
-      .then((response) => {
-        console.log(response);
-        if (response.ok) {
-          return this.props.history.push(`/`);
-        }
-        throw Error(response.status.toString());
+      .then((response) => response.json())
+      .then((responseData) => {
+        console.log(responseData);
+        Cookies.set("auth", responseData[0].user_id);
+        return this.props.history.push(`/`);
       })
       .then((result) => {
         console.log(result);

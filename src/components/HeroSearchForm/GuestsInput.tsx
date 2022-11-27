@@ -105,7 +105,7 @@ const GuestsInput: FC<GuestsInputProps> = ({
                 className="w-full"
                 defaultValue={guestAdultsInputValue}
                 onChange={(value) => setGuestAdultsInputValue(value)}
-                max={10}
+                max={4}
                 min={1}
                 label="Adults"
                 desc="Ages 13 or above"
@@ -114,7 +114,7 @@ const GuestsInput: FC<GuestsInputProps> = ({
                 className="w-full mt-6"
                 defaultValue={guestChildrenInputValue}
                 onChange={(value) => setGuestChildrenInputValue(value)}
-                max={4}
+                max={2}
                 label="Children"
                 desc="Ages 2–12"
               />
@@ -123,7 +123,7 @@ const GuestsInput: FC<GuestsInputProps> = ({
                 className="w-full mt-6"
                 defaultValue={guestInfantsInputValue}
                 onChange={(value) => setGuestInfantsInputValue(value)}
-                max={4}
+                max={2}
                 label="Infants"
                 desc="Ages 0–2"
               />

@@ -27,6 +27,8 @@ import SectionSliderNewCategories from "components/SectionSliderNewCategories/Se
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import axios from "axios";
 import Reserve from "components/Reserve/Reserve";
+import Cookies from "js-cookie";
+import { useHistory } from "react-router-dom";
 
 export interface ListingStayDetailPageProps {
   className?: string;
@@ -81,7 +83,7 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [openFocusIndex, setOpenFocusIndex] = useState(0);
-  const [selectedDate, setSelectedDate] = useState<DateRage>({
+  const [selectedDate, setSelectedDate]: any = useState<DateRage>({
     startDate: moment(),
     endDate: moment().add(4, "days"),
   });
@@ -538,9 +540,15 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
       </div>
     );
   };
+  const auth = Cookies.get("auth");
+  const history = useHistory();
 
   const handleClick = () => {
-    setOpenModal(true);
+    if (auth) {
+      setOpenModal(true);
+    } else {
+      history.push("/login");
+    }
   };
 
   const renderSection6 = () => {
@@ -712,8 +720,18 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
         {/* SUM */}
         <div className="flex flex-col space-y-4">
           <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
-            <span>${listingData.hsPrice} x 3 night</span>
-            <span>${listingData.hsPrice * 3}</span>
+            <span>
+              ${listingData.hsPrice} x{" "}
+              {selectedDate.endDate.format("DD") -
+                selectedDate.startDate.format("DD")}{" "}
+              night
+            </span>
+            <span>
+              $
+              {listingData.hsPrice *
+                (selectedDate.endDate.format("DD") -
+                  selectedDate.startDate.format("DD"))}
+            </span>
           </div>
           <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
             <span>Service charge</span>
@@ -722,7 +740,12 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
           <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
           <div className="flex justify-between font-semibold">
             <span>Total</span>
-            <span>${listingData.hsPrice * 3}</span>
+            <span>
+              $
+              {listingData.hsPrice *
+                (selectedDate.endDate.format("DD") -
+                  selectedDate.startDate.format("DD"))}
+            </span>
           </div>
         </div>
 
@@ -748,7 +771,7 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({
               <NcImage
                 containerClassName="absolute inset-0"
                 className="object-cover w-full h-full rounded-md sm:rounded-xl"
-                src={listingData.hsImg}
+                src={PHOTOS[0]}
                 prevImageHorizontal
               />
 

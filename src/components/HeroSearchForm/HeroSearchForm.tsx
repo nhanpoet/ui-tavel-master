@@ -3,14 +3,13 @@ import "react-dates/initialize";
 import ExperiencesSearchForm from "./ExperiencesSearchForm";
 import StaySearchForm from "./StaySearchForm";
 import RentalCarSearchForm from "./RentalCarSearchForm";
-import FlightSearchForm from "./FlightSearchForm";
 
-export type SearchTab = "Stays" | "Experiences" | "Cars" | "Flights";
+export type SearchTab = "Stays" | "Experiences" | "Cars";
 
 export interface HeroSearchFormProps {
   className?: string;
   currentTab?: SearchTab;
-  currentPage?: "Stays" | "Experiences" | "Cars" | "Flights";
+  currentPage?: "Stays" | "Experiences" | "Cars";
 }
 
 const HeroSearchForm: FC<HeroSearchFormProps> = ({
@@ -18,7 +17,7 @@ const HeroSearchForm: FC<HeroSearchFormProps> = ({
   currentTab = "Stays",
   currentPage,
 }) => {
-  const tabs: SearchTab[] = ["Stays", "Experiences", "Cars", "Flights"];
+  const tabs: SearchTab[] = ["Stays", "Experiences", "Cars"];
   const [tabActive, setTabActive] = useState<SearchTab>(currentTab);
 
   const renderTab = () => {
@@ -56,8 +55,6 @@ const HeroSearchForm: FC<HeroSearchFormProps> = ({
         return <ExperiencesSearchForm haveDefaultValue={isArchivePage} />;
       case "Cars":
         return <RentalCarSearchForm haveDefaultValue={isArchivePage} />;
-      case "Flights":
-        return <FlightSearchForm haveDefaultValue={isArchivePage} />;
 
       default:
         return null;

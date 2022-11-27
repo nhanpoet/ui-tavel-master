@@ -39,9 +39,6 @@ const Reserve = ({ setOpen, hsId }: any) => {
   };
   console.log(selectedRooms);
 
-  const handleClick = () => {};
-
-  //
   return (
     <div>
       <Transition appear show={isOpenMoreFilter} as={Fragment}>
@@ -123,7 +120,7 @@ const Reserve = ({ setOpen, hsId }: any) => {
 
                 <div className="p-6 flex-shrink-0 bg-neutral-50 dark:bg-neutral-900 dark:border-t dark:border-neutral-800 flex items-center justify-between">
                   <ButtonPrimary
-                    onClick={closeModalMoreFilter}
+                    href={`/checkout/${selectedRooms}`}
                     sizeClass="px-4 py-2 sm:px-5"
                   >
                     Reserve Now!

@@ -7,8 +7,10 @@ import {
   LogoutIcon,
   SupportIcon,
 } from "@heroicons/react/outline";
+import Cookies from "js-cookie";
 import { Fragment } from "react";
 import Avatar from "shared/Avatar/Avatar";
+import swal from "sweetalert";
 
 const solutions = [
   {
@@ -48,6 +50,11 @@ const solutionsFoot = [
 ];
 
 export default function AvatarDropdown() {
+  function removeCokies() {
+    swal("Oops", "Logout Success", "success");
+    return Cookies.remove("auth");
+  }
+
   return (
     <div className="AvatarDropdown">
       <Popover className="relative">
@@ -91,6 +98,7 @@ export default function AvatarDropdown() {
                       <a
                         key={index}
                         href={item.href}
+                        onClick={removeCokies}
                         className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                       >
                         <div className="flex items-center justify-center flex-shrink-0 text-neutral-500 dark:text-neutral-300">

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useContext, useState } from "react";
 import Logo from "shared/Logo/Logo";
 import MenuBar from "shared/MenuBar/MenuBar";
 import SwitchDarkMode from "shared/SwitchDarkMode/SwitchDarkMode";
@@ -6,14 +6,16 @@ import NotifyDropdown from "./NotifyDropdown";
 import AvatarDropdown from "./AvatarDropdown";
 import DropdownTravelers from "./DropdownTravelers";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
-
-import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export interface MainNav2Props {
   isTop: boolean;
 }
 
 const MainNav2: FC<MainNav2Props> = ({ isTop }) => {
+  const auth = Cookies.get("auth");
+  console.log(auth);
+
   return (
     <div
       className={`nc-MainNav1 nc-MainNav2 relative z-10 ${
@@ -30,26 +32,18 @@ const MainNav2: FC<MainNav2Props> = ({ isTop }) => {
         </div>
         <div className="flex-shrink-0 flex items-center justify-end text-neutral-700 dark:text-neutral-100 space-x-1">
           <div className="hidden items-center xl:flex space-x-1">
-            <Link
-              to="/add-listing-1"
-              className="
-                text-opacity-90
-                group px-4 py-2 border border-neutral-300 hover:border-neutral-400 dark:border-neutral-700 rounded-full inline-flex items-center text-sm text-gray-700 dark:text-neutral-300 font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-            >
-              List your property
-            </Link>
-
             <div></div>
             <SwitchDarkMode />
             <NotifyDropdown />
             <div></div>
-            {/* <AvatarDropdown /> */}
+            {auth ? <AvatarDropdown /> : null}
+
             <div className="px-1" />
-            <ButtonPrimary href="/login">Sign up</ButtonPrimary>
+            {auth ? "" : <ButtonPrimary href="/login">Sign up</ButtonPrimary>}
           </div>
           <div className="flex items-center space-x-4 xl:hidden">
             <NotifyDropdown />
-            {/* <AvatarDropdown /> */}
+            {auth ? <AvatarDropdown /> : null}
             <MenuBar />
           </div>
         </div>
