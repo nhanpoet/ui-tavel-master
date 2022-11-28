@@ -42,6 +42,7 @@ import ListingRealEstateMapPage from "containers/ListingRealEstatePage/ListingRe
 import ListingRealEstatePage from "containers/ListingRealEstatePage/ListingRealEstatePage";
 import SiteHeader from "containers/SiteHeader";
 import ListingFlightsPage from "containers/ListingFlightsPage/ListingFlightsPage";
+import AccountEditPage from "containers/AccountPage/AccountEditPage";
 
 export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
@@ -78,6 +79,7 @@ export const pages: Page[] = [
   //
   { path: "/author", component: AuthorPage },
   { path: "/account", component: AccountPage },
+  { path: "/account-edit", component: AccountEditPage },
   { path: "/account-password", component: AccountPass },
   { path: "/account-savelists", component: AccountSavelists },
   { path: "/account-billing", component: AccountBilling },

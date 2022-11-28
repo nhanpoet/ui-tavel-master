@@ -7,15 +7,16 @@ import {
   LogoutIcon,
   SupportIcon,
 } from "@heroicons/react/outline";
+import axios from "axios";
 import Cookies from "js-cookie";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Avatar from "shared/Avatar/Avatar";
 import swal from "sweetalert";
 
 const solutions = [
   {
     name: "Account",
-    href: "##",
+    href: "/account/",
     icon: UserCircleIcon,
   },
   {
@@ -54,6 +55,15 @@ export default function AvatarDropdown() {
     swal("Oops", "Logout Success", "success");
     return Cookies.remove("auth");
   }
+  const auth = Cookies.get("auth");
+
+  const [userData, setUserData]: any = useState([]);
+
+  useEffect(() => {
+    axios.get(`http://localhost:8080/api/user/${auth}`).then((response) => {
+      setUserData(response.data);
+    });
+  }, []);
 
   return (
     <div className="AvatarDropdown">
@@ -63,7 +73,10 @@ export default function AvatarDropdown() {
             <Popover.Button
               className={`inline-flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
             >
-              <Avatar sizeClass="w-8 h-8 sm:w-9 sm:h-9" />
+              <Avatar
+                imgUrl={userData.userAvatar}
+                sizeClass="w-8 h-8 sm:w-9 sm:h-9"
+              />
             </Popover.Button>
             <Transition
               as={Fragment}

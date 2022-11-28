@@ -27,6 +27,7 @@ export interface LocationStates {
   "/pay-done"?: {};
   //
   "/account"?: {};
+  "/account-edit"?: {};
   "/account-savelists"?: {};
   "/account-password"?: {};
   "/account-billing"?: {};

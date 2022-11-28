@@ -62,7 +62,7 @@ export default class PageLogin extends React.Component<any, any> {
       .then((response) => response.json())
       .then((responseData) => {
         console.log(responseData);
-        Cookies.set("auth", responseData[0].user_id);
+        Cookies.set("auth", responseData[0].userId);
         return this.props.history.push(`/`);
       })
       .then((result) => {
