@@ -27,8 +27,6 @@ const AccountEditPage: FC<AccountPageProps> = ({ className = "" }) => {
     userUsername: "",
   });
 
-  const { userEmail } = userData;
-
   const history = useHistory();
 
   const onInputChange = (e: any) => {
@@ -128,7 +126,7 @@ const AccountEditPage: FC<AccountPageProps> = ({ className = "" }) => {
                     className="mt-1.5"
                     name="userEmail"
                     onChange={(e) => onInputChange(e)}
-                    value={userEmail}
+                    defaultValue={userData.userUsername}
                   />
                 </div>
                 {/* ---- */}
