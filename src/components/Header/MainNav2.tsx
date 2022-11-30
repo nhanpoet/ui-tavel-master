@@ -14,7 +14,6 @@ export interface MainNav2Props {
 
 const MainNav2: FC<MainNav2Props> = ({ isTop }) => {
   const auth = Cookies.get("auth");
-  console.log(auth);
 
   return (
     <div

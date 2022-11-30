@@ -28,6 +28,12 @@ const Reserve = ({ setOpen, hsId }: any) => {
   //
   const closeModalMoreFilter = () => setOpen(false);
 
+  const isAvailable = (item: any) => {
+    const isFound = item.roomStatus !== 0;
+
+    return !isFound;
+  };
+
   const handleSelect = (e: any) => {
     const checked = e.target.checked;
     const value = e.target.value;
@@ -112,6 +118,7 @@ const Reserve = ({ setOpen, hsId }: any) => {
                           type="checkbox"
                           value={item.roomId}
                           onChange={handleSelect}
+                          disabled={!isAvailable(item)}
                         ></input>
                       </div>
                     ))}
