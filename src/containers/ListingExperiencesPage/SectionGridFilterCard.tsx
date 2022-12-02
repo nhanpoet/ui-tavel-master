@@ -16,6 +16,8 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
   data = [],
 }) => {
   const [listingData, setListingData] = useState<ExperiencesDataType[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(4);
 
   useEffect(() => {
     axios.get("http://localhost:8080/api/experiences/").then((response) => {
@@ -23,7 +25,10 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
     });
   }, []);
 
-  const DEMO_DATA = listingData.filter((_, i) => i < 4);
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const DEMO_DATA = listingData.slice(indexOfFirstPost, indexOfLastPost);
+
   return (
     <div
       className={`nc-SectionGridFilterCard ${className}`}
@@ -50,7 +55,11 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
         ))}
       </div>
       <div className="flex mt-16 justify-center items-center">
-        <Pagination />
+        <Pagination
+          totalPosts={listingData.length}
+          postsPerPage={postsPerPage}
+          setCurrentPage={setCurrentPage}
+        />
       </div>
     </div>
   );

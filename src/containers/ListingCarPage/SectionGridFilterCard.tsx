@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState } from "react";
-import { DEMO_CAR_LISTINGS } from "data/listings";
 import { CarDataType } from "data/types";
 import Pagination from "shared/Pagination/Pagination";
 import TabFilters from "./TabFilters";
@@ -17,6 +16,8 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
   data = [],
 }) => {
   const [listingData, setListingData] = useState<CarDataType[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(4);
 
   useEffect(() => {
     axios.get("http://localhost:8080/api/car").then((response) => {
@@ -24,7 +25,9 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
     });
   }, []);
 
-  const DEMO_DATA = listingData.filter((_, i) => i < 4);
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const DEMO_DATA = listingData.slice(indexOfFirstPost, indexOfLastPost);
 
   return (
     <div
@@ -51,7 +54,11 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
         ))}
       </div>
       <div className="flex mt-16 justify-center items-center">
-        <Pagination />
+        <Pagination
+          totalPosts={listingData.length}
+          postsPerPage={postsPerPage}
+          setCurrentPage={setCurrentPage}
+        />
       </div>
     </div>
   );

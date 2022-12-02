@@ -24,8 +24,6 @@ const SectionGridHasMap: FC<SectionGridHasMapProps> = () => {
     });
   }, []);
 
-  const DEMO_DATA = listingData.filter((_, i) => i < 4);
-
   return (
     <div>
       <div className="relative flex min-h-screen">
@@ -46,7 +44,7 @@ const SectionGridHasMap: FC<SectionGridHasMapProps> = () => {
             <TabFilters />
           </div>
           <div className="grid grid-cols-1 gap-8">
-            {DEMO_DATA.map((item: any) => (
+            {listingData.map((item: any) => (
               <div
                 key={item.id}
                 onMouseEnter={() => setCurrentHoverID((_) => item.id)}
@@ -100,7 +98,7 @@ const SectionGridHasMap: FC<SectionGridHasMapProps> = () => {
               yesIWantToUseGoogleMapApiInternals
               defaultCenter={{ lat: 35.689487, lng: 139.691711 }}
             >
-              {DEMO_DATA.map((item: any) => (
+              {listingData.map((item: any) => (
                 <AnyReactComponent
                   isSelected={currentHoverID === item.id}
                   key={item.exId}

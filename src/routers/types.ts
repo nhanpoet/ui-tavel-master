@@ -23,7 +23,8 @@ export interface LocationStates {
   "/listing-car-map"?: {};
   "/listing-car-detail"?: {};
   //
-  "/checkout"?: {};
+  "/checkout/stay"?: {};
+  "/checkout/car"?: {};
   "/pay-done"?: {};
   //
   "/account"?: {};

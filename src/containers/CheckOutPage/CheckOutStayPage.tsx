@@ -12,7 +12,6 @@ import StartRating from "components/StartRating/StartRating";
 import NcModal from "shared/NcModal/NcModal";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { DateRage } from "components/HeroSearchForm/StaySearchForm";
 import moment from "moment";
 import StayDatesRangeInput from "components/HeroSearchForm/StayDatesRangeInput";
 import useWindowSize from "hooks/useWindowResize";
@@ -30,7 +29,7 @@ const CheckOutPage: FC<CheckOutPageProps> = ({ className = "" }) => {
   const windowSize = useWindowSize();
 
   // eslint-disable-next-line no-restricted-globals
-  const id = location.pathname.split("/")[3];
+  const id = location.pathname.split("/")[4];
 
   const [listingData, setListingData]: any = useState([]);
 

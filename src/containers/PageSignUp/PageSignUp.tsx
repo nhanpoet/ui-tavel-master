@@ -1,11 +1,12 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import facebookSvg from "images/Facebook.svg";
 import twitterSvg from "images/Twitter.svg";
 import googleSvg from "images/Google.svg";
 import { Helmet } from "react-helmet";
 import Input from "shared/Input/Input";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
 
 export interface PageSignUpProps {
   className?: string;
@@ -30,6 +31,25 @@ const loginSocials = [
 ];
 
 const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
+  const [user, setUser] = useState({
+    userEmail: "",
+    userPassword: "",
+  });
+
+  const history = useHistory();
+
+  const { userEmail, userPassword } = user;
+
+  const onInputChange = (e: any) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+    await axios.post("http://localhost:8080/api/login_user", user);
+    history.push(`/`);
+  };
+
   return (
     <div className={`nc-PageSignUp  ${className}`} data-nc-id="PageSignUp">
       <Helmet>
@@ -66,7 +86,10 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
             <div className="absolute left-0 w-full top-1/2 transform -translate-y-1/2 border border-neutral-100 dark:border-neutral-800"></div>
           </div>
           {/* FORM */}
-          <form className="grid grid-cols-1 gap-6" action="#" method="post">
+          <form
+            className="grid grid-cols-1 gap-6"
+            onSubmit={(e) => onSubmit(e)}
+          >
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
                 Email address
@@ -75,13 +98,22 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 type="email"
                 placeholder="example@example.com"
                 className="mt-1"
+                name="userEmail"
+                value={userEmail}
+                onChange={(e) => onInputChange(e)}
               />
             </label>
             <label className="block">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
                 Password
               </span>
-              <Input type="password" className="mt-1" />
+              <Input
+                type="password"
+                name="userPassword"
+                value={userPassword}
+                onChange={(e) => onInputChange(e)}
+                className="mt-1"
+              />
             </label>
             <ButtonPrimary type="submit">Continue</ButtonPrimary>
           </form>

@@ -32,6 +32,8 @@ import carUtilities8 from "images/carUtilities/8.png";
 import RentalCarDatesRangeInput from "components/HeroSearchForm/RentalCarDatesRangeInput";
 import { TimeRage } from "components/HeroSearchForm/RentalCarSearchForm";
 import axios from "axios";
+import Cookies from "js-cookie";
+import { useHistory } from "react-router-dom";
 
 export interface ListingCarDetailPageProps {
   className?: string;
@@ -138,6 +140,17 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
   const handleOpenModal = (index: number) => {
     setIsOpen(true);
     setOpenFocusIndex(index);
+  };
+
+  const auth = Cookies.get("auth");
+  const history = useHistory();
+
+  const handleClick = () => {
+    if (auth) {
+      history.push(`/checkout/car/${id}`);
+    } else {
+      history.push("/login");
+    }
   };
 
   const handleCloseModal = () => setIsOpen(false);
@@ -600,7 +613,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
         </div>
 
         {/* SUBMIT */}
-        <ButtonPrimary>Reserve</ButtonPrimary>
+        <ButtonPrimary onClick={handleClick}>Reserve</ButtonPrimary>
       </div>
     );
   };
@@ -655,7 +668,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
             >
               <NcImage
                 containerClassName="absolute inset-0"
-                className="object-cover w-full h-full rounded-md sm:rounded-xl"
+                className="object-fill w-full h-full rounded-md sm:rounded-xl"
                 src={listingData.carImg}
                 prevImageHorizontal
               />
@@ -765,7 +778,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
             </span>
           </span>
 
-          <ButtonPrimary href="##">Reserve</ButtonPrimary>
+          <ButtonPrimary onClick={handleClick}>Reserve</ButtonPrimary>
         </div>
       </div>
 

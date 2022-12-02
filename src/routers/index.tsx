@@ -14,7 +14,6 @@ import ListingExperiencesDetailPage from "containers/ListingDetailPage/ListingEx
 import ListingCarPage from "containers/ListingCarPage/ListingCarPage";
 import ListingCarMapPage from "containers/ListingCarPage/ListingCarMapPage";
 import ListingCarDetailPage from "containers/ListingDetailPage/ListingCarDetailPage";
-import CheckOutPage from "containers/CheckOutPage/CheckOutPage";
 import PayPage from "containers/PayPage/PayPage";
 import AuthorPage from "containers/AuthorPage/AuthorPage";
 import AccountPage from "containers/AccountPage/AccountPage";
@@ -43,6 +42,8 @@ import ListingRealEstatePage from "containers/ListingRealEstatePage/ListingRealE
 import SiteHeader from "containers/SiteHeader";
 import ListingFlightsPage from "containers/ListingFlightsPage/ListingFlightsPage";
 import AccountEditPage from "containers/AccountPage/AccountEditPage";
+import CheckOutCarPage from "containers/CheckOutPage/CheckOutCarPage";
+import CheckOutStayPage from "containers/CheckOutPage/CheckOutStayPage";
 
 export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
@@ -74,7 +75,9 @@ export const pages: Page[] = [
   //
   { path: "/listing-flights", component: ListingFlightsPage },
   //
-  { path: "/checkout", component: CheckOutPage },
+  { path: "/checkout/stay", component: CheckOutStayPage },
+  { path: "/checkout/car", component: CheckOutCarPage },
+
   { path: "/pay-done", component: PayPage },
   //
   { path: "/author", component: AuthorPage },
